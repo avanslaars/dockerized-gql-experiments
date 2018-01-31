@@ -1,0 +1,29 @@
+version: '3'
+services:
+  web:
+    build: .
+    ports:
+      - 4000:3000
+    volumes:
+      - ./web:/app/src
+      - /app/node_modules
+    command: node /app/src/index.js 
+    environment:
+      - NODE_ENV=development
+  gql:
+    build: .
+    ports:
+      - 4100:3000
+    volumes:
+      - ./gql:/app/src
+      - /app/node_modules
+    command: node /app/src/index.js
+    environment:
+      - NODE_ENV=development
+  rdb:
+    image: rethinkdb:2
+    ports:
+      - 28015
+    volumes:
+      - ./db:/data
+    command: rethinkdb --bind all --directory /data
